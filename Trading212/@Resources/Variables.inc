@@ -24,8 +24,9 @@ FontFace=Segoe UI
 FontFaceValue=Segoe UI Semibold
 
 ; --- Text -----------------------------------------------------------------
-; Euro sign as a character reference: this file must stay ASCII.
+; Currency signs as character references: this file must stay ASCII.
 Euro=[\x20AC]
+Pound=[\x00A3]
 
 ; --- API ------------------------------------------------------------------
 BaseUrl=https://live.trading212.com

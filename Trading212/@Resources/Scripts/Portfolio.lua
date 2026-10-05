@@ -10,9 +10,18 @@
 -- ---------------------------------------------------------------------------
 
 -- Rainmeter cannot read UTF-8 .lua files, so this script stays pure ASCII.
--- #Euro# (a character reference in Variables.inc) is resolved by the String
--- meters, which have DynamicVariables=1.
-local EURO = '#Euro#'
+-- Non-ASCII symbols are variables holding character references in
+-- Variables.inc (#Euro#, #Pound#), resolved by the String meters, which have
+-- DynamicVariables=1. Any currency not listed is shown as its ISO code.
+local CURRENCY_SYMBOLS = {
+  EUR = '#Euro#',
+  GBP = '#Pound#',
+  USD = '$',
+}
+
+-- Set from the account's currency on each response, or from the
+-- CurrencySymbol setting when that is filled in.
+local currencySymbol = ''
 
 local paths = {}
 local minInterval = 15
@@ -110,7 +119,7 @@ end
 
 local function render()
   if lastValue then
-    setVariable('TotalText', EURO .. formatAmount(lastValue))
+    setVariable('TotalText', currencySymbol .. formatAmount(lastValue))
   end
 
   if status == 'ok' then
@@ -119,7 +128,7 @@ local function render()
       local percent = change / math.abs(baselineValue) * 100
       local sign = change >= 0 and '+' or '-'
       setVariable('ChangeText', string.format('%s%s%s   %s%.2f%% today',
-        sign, EURO, formatAmount(math.abs(change)), sign, math.abs(percent)))
+        sign, currencySymbol, formatAmount(math.abs(change)), sign, math.abs(percent)))
       if change > 0.005 then
         setVariable('ChangeColor', var('ColorUp', '76,201,133,255'))
       elseif change < -0.005 then
@@ -198,12 +207,15 @@ function OnData()
     return OnError('unreadable response')
   end
 
-  local currency = body:match('"currency"%s*:%s*"([A-Za-z]+)"')
-  if currency and currency ~= 'EUR' then
-    statusDetail = 'Account is in ' .. currency .. ', not EUR'
+  local override = var('CurrencySymbol', '')
+  if override ~= '' then
+    currencySymbol = override
   else
-    statusDetail = ''
+    local currency = (body:match('"currency"%s*:%s*"([A-Za-z]+)"') or ''):upper()
+    currencySymbol = CURRENCY_SYMBOLS[currency] or (currency ~= '' and currency .. ' ' or '')
   end
+
+  statusDetail = ''
 
   status = 'ok'
   lastValue = value

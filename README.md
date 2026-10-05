@@ -1,6 +1,6 @@
 # Trading 212 for Rainmeter
 
-A small Rainmeter skin that shows your Trading 212 account value in EUR and
+A small Rainmeter skin that shows your Trading 212 account value and
 how much it has changed today.
 
 ![Trading 212 skin showing €1,234.56, +€3.21 (+0.26%) today](docs/screenshot.png)
@@ -8,7 +8,7 @@ how much it has changed today.
 ## Requirements
 
 - Windows with [Rainmeter](https://www.rainmeter.net/) 4.x
-- A Trading 212 Invest or Stocks ISA account in EUR
+- A Trading 212 Invest or Stocks ISA account
 
 ## Install
 
@@ -28,6 +28,7 @@ Upgrading with a newer `.rmskin` keeps your key and secret.
 | --- | --- | --- |
 | `ApiKey` / `ApiSecret` | empty | Trading 212 API credentials |
 | `RefreshSeconds` | `60` | How often to poll the API. The limit is 1 request every 5 s, so keep this at 10 or more. |
+| `CurrencySymbol` | empty | Empty: taken from your account (€, £, $, otherwise the currency code, e.g. `PLN`). Set it to override. |
 
 Colours, fonts and layout are in `@Resources/Variables.inc`.
 
