@@ -1,0 +1,12 @@
+# Runtime state (day baseline)
+Trading212/@Resources/State/*
+!Trading212/@Resources/State/.gitkeep
+
+# Rainmeter WebParser debug dumps
+WebParserDump.txt
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
