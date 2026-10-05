@@ -3,12 +3,7 @@
 A small Rainmeter skin that shows your Trading 212 account value in EUR and
 how much it has changed today.
 
-```
-TRADING 212
-€12,345.67
-+€84.20   +0.69% today
-Updated 14:32
-```
+![Trading 212 skin showing €1,234.56, +€3.21 (+0.26%) today](docs/screenshot.png)
 
 ## Requirements
 
